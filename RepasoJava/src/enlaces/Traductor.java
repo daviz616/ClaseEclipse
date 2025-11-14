@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 public class Traductor {
 
 	private static String cortarHTML(String html) {
@@ -44,13 +48,15 @@ public class Traductor {
 	public static void main(String[] args) throws IOException{
 
 		URL direccion = new URL("https://www.spanishdict.com/translate/gato");
-		String html = obtenerHTML(direccion); 
-		String palabraTraducida =cortarHTML(html) ;
-
-		System.out.println(palabraTraducida);
-
+		//String html = obtenerHTML(direccion); 
+		//String palabraTraducida =cortarHTML(html) ;
+		//System.out.println(palabraTraducida);
 		
-
+		String web = "https://www.spanishdict.com/translate/gato";
+		Document document = Jsoup.connect(web).get();		
+		Element palabra = document.select("div#quickdef1-es a.tCur1iYh").get(0);
+		String resultado= palabra.html().toUpperCase();
+			System.out.println(resultado);
 	}
 
 
